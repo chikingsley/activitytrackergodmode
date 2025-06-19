@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="true" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    <entity name="ActivitySession" representedClassName="ActivitySession" syncable="YES" codeGenerationType="class">
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="startTime" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="applicationName" attributeType="String" usesScalarValueType="NO"/>
+        <attribute name="applicationBundleID" attributeType="String" usesScalarValueType="NO"/>
+        <attribute name="windowTitle" optional="YES" attributeType="String" usesScalarValueType="NO"/>
+        <attribute name="tabTitle" optional="YES" attributeType="String" usesScalarValueType="NO"/>
+        <attribute name="projectName" optional="YES" attributeType="String" usesScalarValueType="NO"/>
+        <attribute name="filePath" optional="YES" attributeType="String" usesScalarValueType="NO"/>
+        <attribute name="isActive" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="ActivitySummary" representedClassName="ActivitySummary" syncable="YES" codeGenerationType="class">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="totalActiveTime" attributeType="Double" usesScalarValueType="YES"/>
+        <relationship name="applicationStats" optional="YES" destinationEntity="AppStat" toMany="YES" deletionRule="Cascade" inverseName="activitySummary" inverseEntity="AppStat"/>
+    </entity>
+    <entity name="AppStat" representedClassName="AppStat" syncable="YES" codeGenerationType="class">
+        <attribute name="applicationName" attributeType="String" usesScalarValueType="NO"/>
+        <attribute name="applicationBundleID" attributeType="String" usesScalarValueType="NO"/>
+        <attribute name="totalTimeSpent" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="activityPercentage" attributeType="Double" usesScalarValueType="YES"/>
+        <relationship name="activitySummary" optional="YES" destinationEntity="ActivitySummary" deletionRule="Nullify" inverseName="applicationStats" inverseEntity="ActivitySummary"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
+        <element name="ActivitySession" positionX="-60" positionY="0" width="128" height="228"/>
+        <element name="ActivitySummary" positionX="120" positionY="0" width="128" height="88"/>
+        <element name="AppStat" positionX="300" positionY="0" width="128" height="116"/>
     </elements>
 </model>

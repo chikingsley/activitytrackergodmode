@@ -4,5 +4,7 @@
 <dict>
     <key>LSUIElement</key>
     <true/>
+    <key>NSAccessibilityUsageDescription</key>
+    <string>This application requires accessibility permissions to detect active applications and window titles for activity tracking. Your data is stored locally and is not shared.</string>
 </dict>
 </plist> 

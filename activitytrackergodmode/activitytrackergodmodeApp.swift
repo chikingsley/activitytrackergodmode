@@ -15,6 +15,18 @@ struct activitytrackergodmodeApp: App {
     @StateObject private var appState = AppState()
     @State private var settingsWindow: NSWindow?
 
+    init() {
+        // Request accessibility permissions on app launch
+        // This will prompt the user if permissions haven't been granted yet.
+        AccessibilityService.shared.requestAccessibilityPermissions()
+
+        // Initialize and start activity monitoring
+        // The ActivityMonitorService constructor sets up the necessary observers.
+        let _ = ActivityMonitorService.shared
+        // If startMonitoring() was designed to be explicitly called and not just rely on init:
+        // ActivityMonitorService.shared.startMonitoring()
+    }
+
     var body: some Scene {
         MenuBarExtra("Activity Tracker", systemImage: "chart.bar") {
             VStack(spacing: 0) {
@@ -154,6 +166,20 @@ struct activitytrackergodmodeApp: App {
                     }
                     
                     // Control buttons
+                    #if DEBUG
+                    Divider()
+                    Button("Generate Test Data") {
+                        let dataManager = DataManager() // Assuming default PersistenceController.shared
+                        let generator = TestDataGenerator(dataManager: dataManager)
+                        generator.generateTestData()
+                    }
+                    .padding(.bottom, 5)
+
+                    Divider() // Separator before ActiveSessionsView
+                    ActiveSessionsView()
+                    // No specific padding for ActiveSessionsView itself here, it has internal padding.
+                    #endif
+
                     HStack(spacing: 8) {
                         Button(action: {
                             openSettings()
